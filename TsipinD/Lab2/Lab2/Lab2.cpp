@@ -64,6 +64,42 @@ void SyncRemove(const string& key) {
     }
 }
 
+void PolynomialArithmetic() {
+    string key1, key2, keyRes;
+    cout << "Enter key of the first polynomial: "; cin >> key1;
+    cout << "Enter key of the second polynomial: "; cin >> key2;
+
+    Polynom* p1 = unordTab.Find(key1);
+    Polynom* p2 = unordTab.Find(key2);
+
+    if (!p1 || !p2) {
+        cout << "[Error] One or both polynomials not found!\n";
+        return;
+    }
+
+    cout << "First: "; p1->print(); cout << endl;
+    cout << "Second: "; p2->print(); cout << endl;
+    cout << "Choose operation: 1.Add  2.Sub  3.Mul: ";
+    int op;
+    while (!(std::cin >> op)) {
+        std::cout << "[Error] Input error. Enter a number.\n";
+        std::cin.clear();
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+    }
+
+
+    Polynom result;
+    if (op == 1) result = *p1 + *p2;
+    else if (op == 2) result = *p1 - *p2;
+    else if (op == 3) result = (*p1) * (*p2);
+
+    cout << "Result: "; result.print(); cout << endl;
+    cout << "Enter key to save the result: "; cin >> keyRes;
+
+    SyncInsert(keyRes, result);
+    cout << "[Success] Result saved in all tables.\n";
+}
+
 int main() {
     int choice;
     string key;
@@ -73,7 +109,8 @@ int main() {
         cout << "1. Insert Polynomial\n";
         cout << "2. Find Polynomial\n";
         cout << "3. Remove Polynomial\n";
-        cout << "4. Exit and Save Log\n";
+        cout << "4. Polynomial Arithmetic\n";
+        cout << "5. Exit and Save Log\n";
         cout << "====================================\n";
         cout << "Enter choice: ";
 
@@ -83,7 +120,7 @@ int main() {
             continue;
         }
 
-        if (choice == 4) break;
+        if (choice == 5) break;
 
         switch (choice) {
         case 1: {
@@ -117,6 +154,10 @@ int main() {
             cout << "Enter key to remove: ";
             cin >> key;
             SyncRemove(key);
+            break;
+        }
+        case 4: {
+            PolynomialArithmetic();
             break;
         }
         default:

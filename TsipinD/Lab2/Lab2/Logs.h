@@ -28,6 +28,7 @@ public:
     void LogOperation(const std::string& opName, const std::string& key,
         const OpStats& unord, const OpStats& ord,
         const OpStats& avl, const OpStats& hash) {
+
         logFile << "Operation: " << opName << " | Key: " << key << "\n";
         WriteRow("Unordered", unord);
         WriteRow("Ordered", ord);
@@ -35,23 +36,19 @@ public:
         WriteRow("Hash Table", hash);
         logFile << "--------------------------------------------------\n";
 
-        totalUnordered = totalUnordered + unord;
-        totalOrdered = totalOrdered + ord;
-        totalAVL = totalAVL + avl;
-        totalHash = totalHash + hash;
+        totalUnordered += unord;
+        totalOrdered += ord;
+        totalAVL += avl;
+        totalHash += hash;
     }
 
 private:
     void WriteRow(const std::string& name, const OpStats& s) {
         logFile << std::left << std::setw(12) << name
-            << " -> Equals: " << std::setw(5) << s.equals
-            << " | comparisons: " << std::setw(5) << s.comparisons
-            << " | Assign: " << std::setw(5) << s.assignments << "\n";
+            << " -> Total Operations: " << s.total << "\n";
     }
 
     void WriteSummary(const std::string& name, const OpStats& s) {
-        logFile << name << ": Total Equals=" << s.equals
-            << ", Total comparisons=" << s.comparisons
-            << ", Total Assign=" << s.assignments << "\n";
+        logFile << name << ": " << s.total << " ops\n";
     }
 };

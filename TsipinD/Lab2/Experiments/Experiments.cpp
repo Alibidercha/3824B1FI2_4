@@ -34,21 +34,17 @@ string GenerateRandomKey(int length = 10) {
 }
 
 void PrintHeader() {
-    cout << setfill('-') << setw(90) << "-" << setfill(' ') << endl;
+    cout << setfill('-') << setw(63) << "-" << setfill(' ') << endl;
     cout << left << setw(20) << "| Table Type"
-        << " | " << setw(15) << "Equals (==)"
-        << " | " << setw(16) << "Comparisons (><)"
-        << " | " << setw(15) << "Assign (=)"
-        << " | " << setw(10) << "Time (ms)" << " |" << endl;
-    cout << setfill('-') << setw(90) << "-" << setfill(' ') << endl;
+        << " | " << setw(20) << "Total Operations"
+        << " | " << setw(15) << "Time (ms)" << " |" << endl;
+    cout << setfill('-') << setw(63) << "-" << setfill(' ') << endl;
 }
 
 void PrintResult(string name, OpStats s, double time) {
     cout << "| " << left << setw(18) << name
-        << " | " << setw(15) << s.equals
-        << " | " << setw(16) << s.comparisons
-        << " | " << setw(15) << s.assignments
-        << " | " << setw(10) << fixed << setprecision(3) << time << " |" << endl;
+        << " | " << setw(20) << s.total
+        << " | " << setw(15) << fixed << setprecision(3) << time << " |" << endl;
 }
 
 
@@ -94,7 +90,9 @@ void RunExperiment(int N) {
     hash.ResetStats(); for (int i = 0; i < N; ++i) hash.Insert(keys[i], values[i]);
     end = chrono::high_resolution_clock::now();
     PrintResult("Hash Table", hash.GetStats(), chrono::duration<double, milli>(end - start).count());
-    cout << setfill('=') << setw(90) << "=" << setfill(' ') << endl;
+
+
+    cout << setfill('=') << setw(63) << "=" << setfill(' ') << endl;
 
     // ================= FIND =====================
     cout << "\nSTAGE: FIND" << endl;
@@ -124,7 +122,7 @@ void RunExperiment(int N) {
     end = chrono::high_resolution_clock::now();
     PrintResult("Hash Table", hash.GetStats(), chrono::duration<double, milli>(end - start).count());
 
-    cout << setfill('=') << setw(90) << "=" << setfill(' ') << endl;
+    cout << setfill('=') << setw(63) << "=" << setfill(' ') << endl;
 
     // ================= REMOVE =====================
     cout << "\nSTAGE: REMOVE" << endl;
@@ -158,7 +156,7 @@ void RunExperiment(int N) {
     end = chrono::high_resolution_clock::now();
     PrintResult("Hash Table", hash.GetStats(), chrono::duration<double, milli>(end - start).count());
 
-    cout << setfill('=') << setw(90) << "=" << setfill(' ') << endl;
+    cout << setfill('=') << setw(63) << "=" << setfill(' ') << endl;
 }
 
 int main() {

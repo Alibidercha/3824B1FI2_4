@@ -15,38 +15,55 @@ public:
     void ResetStats() { stats.Reset(); }
 
     void Insert(const std::string& key, const T& value) {
+        stats.add(1);
         for (auto& pair : data) {
-            stats.equals++;
+            stats.add(2);
+
+            stats.add(2);
             if (pair.first == key) {
-                stats.assignments++;
+                
+                stats.add(2);
                 pair.second = value; // обновляем значение, если ключ уже есть
+
+                stats.add(1);
                 return;
             }
         }
-        stats.assignments++;
+        stats.add(1); // выход из цикла
+
+
+        stats.add(2);
         data.push_back({ key, value });
     }
 
     T* Find(const std::string& key) {
         for (auto& pair : data) {
-            stats.equals++;
+            stats.add(2);
+
+            stats.add(2);
             if (pair.first == key) {
+                stats.add(3);
                 return &pair.second;
             }
         }
+        stats.add(2);
         return nullptr;
     }
 
     bool Remove(const std::string& key) {
+        stats.add(1);
         for (size_t i = 0; i < data.size(); ++i) {
-            stats.equals++;
+            stats.add(3);
+
+            stats.add(3);
             if (data[i].first == key) {
-                stats.assignments += 2; // перемещение последнего элемента на место удаляемого
+                stats.add(3);
                 data[i] = data.back();
                 data.pop_back();
                 return true;
             }
         }
+        stats.add(2); // выход из цикла и return
         return false;
     }
 };
